@@ -1,14 +1,55 @@
-const http = require('http');
-const server = http.createServer();
+const express = require('express');
+const path = require('path');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const flash = require('express-flash');
 
-function servidor(req, res){
-    res.writeHead(200,{'content-type':'text/plain'});
-    res.write('Magia maia con NODEJS');
-    res.end();
-}
+const app = express(); // Primero creamos la app
 
-server.on('request', servidor);
+//-------------- CONFIGURACIONES --------------
+app.set('view engine', 'ejs'); // Corregido: sin la "s"
+app.set('views', path.join(__dirname, 'views'));
 
-server.listen(3000, function(){
-    console.log('Escuchando en elp  puerto 3000');
+//-------------- MIDDLEWARES --------------
+app.use(session({
+    secret: 'secret', 
+    resave: false, 
+    saveUninitialized: false // Corregido: saveUninitialized
+}));
+app.use(flash());
+
+// Archivos estáticos
+app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')));
+app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')));
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+//-------------- RUTAS --------------
+app.get('/', (req, res) => {
+    let message = req.flash('message');
+    res.render('index', { data: message });
+});
+
+app.get('/altas', (req, res) => {
+    res.render('altas');
+});
+
+app.get('/cambios', (req, res) => {
+    res.render('cambios');
+});
+
+app.get('/consulta', (req, res) => {
+    res.render('consulta');
+});
+
+// Rutas de API/Módulos
+const alumno_rutas = require('./routes/alumnos_routes');
+app.use('/alumnos', alumno_rutas); // Agregada la /
+
+//-------------- LEVANTAR SERVIDOR --------------
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Servidor escuchando en http://localhost:${port}`);
 });

@@ -1,3 +1,5 @@
+'use strict';
+
 const conexion =require('../config/database');
 let Alumno = function(alumno){
     this.NumControl = alumno.NumControl;
@@ -74,3 +76,6 @@ Alumno.findAll = function(result){
             }
     })
 }
+
+//aqui falta algo
+module.exports  = Alumno;
