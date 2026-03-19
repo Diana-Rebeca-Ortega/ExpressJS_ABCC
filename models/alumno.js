@@ -2,13 +2,14 @@
 
 const conexion =require('../config/database');
 let Alumno = function(alumno){
-   this.Num_Control = alumno.Num_Control; 
-    this.Nombre = alumno.Nombre;
-    this.Primer_Ap = alumno.Primer_Ap;
-    this.Segundo_Ap = alumno.Segundo_Ap;
-    this.Fecha_Nac = alumno.Fecha_Nac;
-    this.Semestre = alumno.Semestre;
-    this.Carrera = alumno.Carrera;
+    // Estos nombres deben ser IGUALES a tu tabla en MySQL
+    this.NumControl = alumno.NumControl; 
+    this.Nombre     = alumno.Nombre;
+    this.PrimerAp   = alumno.PrimerAp;
+    this.SegundoAp  = alumno.SegundoAp;
+    this.FechaNac   = alumno.FechaNac;
+    this.Semestre   = alumno.Semestre;
+    this.Carrera    = alumno.Carrera;
 };
 
 //===================LOGICA PARA LA BD DE DATOS RELACIONAL========

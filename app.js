@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
     res.render('index', { data: message });
 });
 
-app.get('/altas_alumnos', (req, res) => {
+app.get('/altas', (req, res) => {
     res.render('altas_alumnos');
 });
 

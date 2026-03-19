@@ -72,7 +72,7 @@
 
                     <div class="panel-heading">
                       <div class="panel-title">
-                        <h2>NUEVO AUMNO</h2>
+                        <h2>NUEVO ALUMNO</h2>
                       </div>
 
                     </div>
@@ -81,68 +81,73 @@
 
                       <section class="example mt-4">
 
-                        <form method="POST" action="/alumnos" 
-                                    role="form" enctype="application/x-www-form-urlencoded">
-                                                <!--ENCTYPE ES IMPORTANTE -->
-                          <div class="mb-3">
-                              <label for="num_control" class="negrita">Numero de Control:</label>
-                              <div>
-                                <input class="form-control" placeholder="Solo nuemros" required="required"
-                                  name="num_control" type="text" id="num_control">
-                              </div>
-                          </div>
+                     <form method="POST" action="/alumnos">
+  
+  <div class="mb-3">
+      <label for="NumControl" class="negrita">Numero de Control:</label>
+      <div>
+        <input class="form-control" placeholder="Solo números" required="required"
+          name="NumControl" type="text" id="NumControl">
+      </div>
+  </div>
 
-                          <div class="mb-3">
-                              <label for="nombre" class="negrita">Nombre:</label>
-                              <div>
-                                <input class="form-control" placeholder="Solo letras" required="required"
-                                  name="nombre" type="text" id="nombre">
-                              </div>
-                          </div>
+  <div class="mb-3">
+      <label for="Nombre" class="negrita">Nombre:</label>
+      <div>
+        <input class="form-control" placeholder="Solo letras" required="required"
+          name="Nombre" type="text" id="Nombre">
+      </div>
+  </div>
 
-                          <div class="mb-3">
-                            <label for="primer_ap" class="negrita">Primer Ap:</label>
-                            <div>
-                              <input class="form-control" placeholder="Solo letras" required="required"
-                                name="primer_ap" type="text" id="primer_ap">
-                            </div>
-                        </div>
+  <div class="mb-3">
+    <label for="PrimerAp" class="negrita">Primer Apellido:</label>
+    <div>
+      <input class="form-control" placeholder="Solo letras" required="required"
+        name="PrimerAp" type="text" id="PrimerAp">
+    </div>
+  </div>
 
-                        <div class="mb-3">
-                          <label for="segundo_ap" class="negrita">Segundo Ap:</label>
-                          <div>
-                            <input class="form-control" placeholder="Solo letras" required="required"
-                              name="segundo_ap" type="text" id="segundo_ap">
-                          </div>
-                      </div>
+  <div class="mb-3">
+    <label for="SegundoAp" class="negrita">Segundo Apellido:</label>
+    <div>
+      <input class="form-control" placeholder="Solo letras"
+        name="SegundoAp" type="text" id="SegundoAp">
+    </div>
+  </div>
 
-                      <div class="mb-3">
-                        <label for="fecha_nac" class="negrita">Fecha de Nacimiento:</label>
-                        <div>
-                          <input class="form-control" placeholder="Solo letras" required="required"
-                            name="fecha_nac" type="text" id="fecha_nac" value="2025-10-10">
-                        </div>
-                    </div>
+  <div class="mb-3">
+    <label for="FechaNac" class="negrita">Fecha de Nacimiento:</label>
+    <div>
+      <input class="form-control" required="required"
+        name="FechaNac" type="date" id="FechaNac">
+    </div>
+  </div>
 
-                    <div class="mb-3">
-                      <label for="semestre" class="negrita">Semestre:</label>
-                      <div>
-                        <input class="form-control" placeholder="Solo letras" required="required"
-                          name="semestre" type="text" id="semestre">
-                      </div>
-                  </div>
+  <div class="mb-3">
+    <label for="Semestre" class="negrita">Semestre:</label>
+    <div>
+      <input class="form-control" placeholder="Ej. 8" required="required"
+        name="Semestre" type="number" id="Semestre">
+    </div>
+  </div>
 
-                  <div class="mb-3">
-                    <label for="carrera" class="negrita">Carrera:</label>
-                    <div>
-                      <input class="form-control" placeholder="Solo letras" required="required"
-                        name="carrera" type="text" id="carrera">
-                    </div>
-                </div>
+  <div class="mb-3">
+  <label for="Carrera" class="negrita">Carrera:</label>
+  <div>
+    <select class="form-select" name="Carrera" id="Carrera" required>
+      <option value="" disabled selected>-- Selecciona una carrera --</option>
+      <option value="Sistemas">Ingeniería en Sistemas Computacionales</option>
+      <option value="Industrial">Ingeniería Industrial</option>
+      <option value="Administración">Licenciatura en Administración</option>
+      <option value="Innovación">Ingeniería en Innovación Agrícola</option>
+      <option value="Mecatrónica">Ingeniería Mecatrónica</option>
+    </select>
+  </div>
+</div>
 
-                          <button type="submit" class="btn btn-success">Guardar</button>
-                          <a href="/" class="btn btn-warning">Cancelar</a>
-                        </form>
+  <button type="submit" class="btn btn-success">Guardar</button>
+  <a href="/" class="btn btn-warning">Cancelar</a>
+</form>
 
                       </section>
 
