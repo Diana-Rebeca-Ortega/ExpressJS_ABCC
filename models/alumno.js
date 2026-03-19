@@ -2,13 +2,13 @@
 
 const conexion =require('../config/database');
 let Alumno = function(alumno){
-    this.NumControl = alumno.NumControl;
-     this.Nombre = alumno.Nombre;
-      this.PrimerAp = alumno.PrimerAp;
-       this.SegundoAp = alumno.SegundoAp;
-        this.FechaNac = alumno.FechaNac;
-         this.Semestre = alumno.Semestre;
-          this.Carrera = alumno.Carrera;
+   this.Num_Control = alumno.Num_Control; 
+    this.Nombre = alumno.Nombre;
+    this.Primer_Ap = alumno.Primer_Ap;
+    this.Segundo_Ap = alumno.Segundo_Ap;
+    this.Fecha_Nac = alumno.Fecha_Nac;
+    this.Semestre = alumno.Semestre;
+    this.Carrera = alumno.Carrera;
 };
 
 //===================LOGICA PARA LA BD DE DATOS RELACIONAL========
@@ -19,14 +19,14 @@ Alumno.create = function(alumno, result){
                 result(err, null);
             }else{
                 console.log("Insrcion EXITOSA");
-                result(null, res.insertID);
+                result(null, res.insertId);
             }
     });
 }
 
 //BAJAS
 Alumno.delete = function(nc, result){
-    conexion.query("DELETE FROM alumnos WHERE NumControl= ?", [nc], function(err, res){
+    conexion.query("DELETE FROM alumnos WHERE Num_Control= ?", [nc], function(err, res){
      if(err){
                 console.log("Error: ", err);
                 result(err, null);
@@ -39,8 +39,8 @@ Alumno.delete = function(nc, result){
 }
 //CAMBIOS 
 Alumno.update = function(id, alumno, result){
-    conexion.query("UPDATE alumos SET Nombre = ?, PrimerAp =?, SegundoAp=?, FechaNac=?, Semestre=?, Carrera =? WHERE NumControl = ?",
-        [alumno.Nombre, alumno.PrimerAp, alumno.SegundoAp, alumno.FechaNac, alumno.Semestre, alumno.Carrera, alumno.NumControl, function(err,res){
+    conexion.query("UPDATE alumnos SET Nombre = ?, PrimerAp =?, SegundoAp=?, FechaNac=?, Semestre=?, Carrera =? WHERE NumControl = ?",
+        [alumno.Nombre, alumno.PrimerAp, alumno.SegundoAp, alumno.FechaNac, alumno.Semestre, alumno.Carrera, id], function(err,res){
             if(err){
                 console.log("Error: ", err);
                 result(err, null);
@@ -48,7 +48,7 @@ Alumno.update = function(id, alumno, result){
                 console.log("Modificacion EXITOSA");
                 result(null, res);
             }
-        }]
+        }
     )
 }
 //CONSULTAS
@@ -71,11 +71,10 @@ Alumno.findAll = function(result){
                 console.log("Error: ", err);
                 result(err, null);
             }else{
-                console.log(res);
+                console.log("Datos encontrados:", res);
                 result(null, res);
             }
     })
 }
 
-//aqui falta algo
 module.exports  = Alumno;
