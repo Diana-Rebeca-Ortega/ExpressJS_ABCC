@@ -4,7 +4,6 @@ const Alumno = require('../models/alumno');
 
 //----- Crear nuevo alumno -----
 exports.create = function(req, res){
-    // 1. CORRECCIÓN: Los nombres después del punto deben coincidir con el 'name' del HTML
     const a = {
         NumControl : req.body.NumControl,
         Nombre     : req.body.Nombre,
@@ -35,17 +34,14 @@ exports.create = function(req, res){
 
 //----- Eliminar un alumno -----
 exports.delete = function(req, res){
-    // Usamos req.params.id que viene de la URL
     Alumno.delete(req.params.id, function(err){
         if(err) res.send(err);
         req.flash('message', '¡Alumno ELIMINADO con EXITO!');
         res.redirect('/');
     });
 };
-
-//----- Modificar alumno -----
+//editar 
 exports.update = function(req, res) {
-    // 2. CORRECCIÓN: Nombres consistentes para la actualización
     const a = {
         NumControl : req.body.NumControl,
         Nombre     : req.body.Nombre,
@@ -54,12 +50,17 @@ exports.update = function(req, res) {
         FechaNac   : req.body.FechaNac,
         Semestre   : req.body.Semestre,
         Carrera    : req.body.Carrera  
-    }
+    };
 
     Alumno.update(req.params.id, new Alumno(a), function(err, result) {      
-        if(err) res.send(err);
-        req.flash('message', '¡Alumno ACTUALIZADO Correctamente!');
-        res.redirect('/');
+        if(err) {
+            return res.status(500).send(err);
+        }
+        
+        res.json({ 
+            success: true, 
+            message: '¡Alumno ACTUALIZADO Correctamente!' 
+        });
     });
 };
 

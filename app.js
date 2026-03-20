@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const flash = require('express-flash');
+const alumnoController = require('./controller/alumnoController');
 
 const app = express(); // Primero creamos la app
 
@@ -53,3 +54,6 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Servidor escuchando en http://localhost:${port}`);
 });
+
+// Esta ruta es la que procesa la actualización en la BD
+app.put('/alumnos/:id', alumnoController.update);

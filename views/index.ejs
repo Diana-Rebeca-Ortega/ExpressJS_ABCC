@@ -25,14 +25,11 @@
     </div>
 
     <script type="text/javascript">
-        // 1. Pedir los datos al servidor
-        // Esta ruta debe devolver el res.send(alumnos) de tu controlador
         fetch("/alumnos").then(response => {
             if (response.ok) {
                 return response.json();
             }
         }).then(data => {
-            // 2. Construir la cabecera de la tabla (Igual que el profe)
             let result = `<table class="table table-striped table-hover">
                             <thead class="table-dark">
                               <tr>
@@ -47,8 +44,6 @@
                               </tr>
                             </thead>
                             <tbody>`;
-
-            // 3. Recorrer los datos de la base de datos
             data.forEach((a) => {
                 result += `<tr> 
                     <td> ${a.NumControl} </td>
@@ -69,21 +64,15 @@
             });
 
             result += `</tbody> </table>`;
-            
-            // 4. Inyectar la tabla en el div
             document.getElementById("tabla_alumnos").innerHTML = result;
 
         }).catch(err => {
             console.log("Error al cargar tabla:", err);
             document.getElementById("tabla_alumnos").innerHTML = "Error al cargar los datos.";
         });
-
-        // Función para el mensaje de confirmación
         function confirmarEliminacion(){
             return confirm("¿Estás seguro de ELIMINAR este registro?");
         }
-
-        // Efecto para desaparecer el mensaje flash
         $(document).ready(function() {
             setTimeout(function() {
                 $(".msj").fadeOut(1500);
