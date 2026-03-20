@@ -6,6 +6,9 @@ const conexion = mysql.createPool({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
    port: process.env.DB_PORT || 3306,
+   ssl: {
+    rejectUnauthorized: false // Esto permite la conexión segura con Clever Cloud
+  },
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
