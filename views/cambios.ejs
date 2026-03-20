@@ -79,27 +79,32 @@
         const urlParams = new URLSearchParams(window.location.search);
         const id = urlParams.get('id');
 
-        if (id) {
-            fetch(`/alumnos/${id}`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data && data.length > 0) {
-                        const a = data[0];
-                        document.getElementById("NumControl").value = a.NumControl;
-                        document.getElementById("Nombre").value = a.Nombre;
-                        document.getElementById("PrimerAp").value = a.PrimerAp;
-                        document.getElementById("SegundoAp").value = a.SegundoAp;
-                        document.getElementById("Semestre").value = a.Semestre;
-                        document.getElementById("Carrera").value = a.Carrera;
-                        
-                        if (a.FechaNac) {
-                            const fecha = new Date(a.FechaNac).toISOString().split('T')[0];
-                            document.getElementById("FechaNac").value = fecha;
-                        }
-                    }
-                })
-                .catch(err => console.error("Error al cargar datos:", err));
-        }
+   if (id) {
+    fetch(`/alumnos/${id}`)
+        .then(res => res.json())
+        .then(data => {
+          
+            const a = Array.isArray(data) ? data[0] : data;
+
+            if (a && (a.NumControl || a.numcontrol)) { 
+              
+                document.getElementById("NumControl").value = a.NumControl || a.numcontrol;
+                document.getElementById("Nombre").value = a.Nombre || "";
+                document.getElementById("PrimerAp").value = a.PrimerAp || "";
+                document.getElementById("SegundoAp").value = a.SegundoAp || "";
+                document.getElementById("Semestre").value = a.Semestre || "";
+                document.getElementById("Carrera").value = a.Carrera || "";
+                
+                if (a.FechaNac) {
+                    const fecha = new Date(a.FechaNac).toISOString().split('T')[0];
+                    document.getElementById("FechaNac").value = fecha;
+                }
+            } else {
+                console.error("No se encontraron datos para el alumno o el formato es incorrecto", data);
+            }
+        })
+        .catch(err => console.error("Error al cargar datos:", err));
+}
 
         document.getElementById("formEditar").onsubmit = function(e) {
             e.preventDefault();
