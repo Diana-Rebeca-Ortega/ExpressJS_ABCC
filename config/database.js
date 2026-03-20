@@ -5,15 +5,11 @@ const conexion = mysql.createPool({
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    port: 3306 // Puerto estándar de Clever Cloud
+    port: 3306,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
 });
 
-conexion.connect(function(err){
-    if(err){
-        console.error('Error de conexión a la BD:', err);
-        return;
-    }
-    console.log('¡Conexión a BD en la nube exitosa!');
-});
-
+// Exportamos directamente el pool
 module.exports = conexion;

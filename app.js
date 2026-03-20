@@ -50,9 +50,9 @@ const alumno_rutas = require('./routes/alumnos_routes');
 app.use('/alumnos', alumno_rutas); // Agregada la /
 
 //-------------- LEVANTAR SERVIDOR --------------
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-    console.log(`Servidor escuchando en http://localhost:${port}`);
+const port = process.env.PORT || 10000;
+app.listen(port, '0.0.0.0', () => {
+    console.log(`Servidor ejecutándose en el puerto ${port}`);
 });
 
 // Esta ruta es la que procesa la actualización en la BD
