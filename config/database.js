@@ -11,5 +11,4 @@ const conexion = mysql.createPool({
     queueLimit: 0
 });
 
-// Exportamos directamente el pool
 module.exports = conexion;
