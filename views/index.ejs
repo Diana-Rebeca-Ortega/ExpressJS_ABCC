@@ -59,9 +59,9 @@
                     <td> ${a.Semestre} </td>
                     <td> ${a.Carrera} </td>
                     <td class="text-center"> 
-                        <form action="alumnos/eliminar/${a.Num_Control}" method="POST" onsubmit="return confirmarEliminacion()">
-                          <a href="/consultas?id=${a.Num_Control}" class="btn btn-primary btn-sm"> Detalle </a> 
-                          <a href="/cambios?id=${a.Num_Control}" class="btn btn-warning btn-sm"> Editar </a> 
+                        <form action="alumnos/eliminar/${a.NumControl}" method="POST" onsubmit="return confirmarEliminacion()">
+                          <a href="/consultas?id=${a.NumControl}" class="btn btn-primary btn-sm"> Detalle </a> 
+                          <a href="/cambios?id=${a.NumControl}" class="btn btn-warning btn-sm"> Editar </a> 
                           <button type="submit" class="btn btn-danger btn-sm"> Eliminar </button>
                         </form>
                     </td>

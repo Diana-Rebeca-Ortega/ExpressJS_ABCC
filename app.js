@@ -40,8 +40,8 @@ app.get('/cambios', (req, res) => {
     res.render('cambios');
 });
 
-app.get('/consulta', (req, res) => {
-    res.render('consulta');
+app.get('/consultas', (req, res) => {
+    res.render('consultas');
 });
 
 // Rutas de API/Módulos
