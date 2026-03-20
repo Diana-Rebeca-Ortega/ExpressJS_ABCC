@@ -57,3 +57,6 @@ app.listen(port, () => {
 
 // Esta ruta es la que procesa la actualización en la BD
 app.put('/alumnos/:id', alumnoController.update);
+
+// Ruta para eliminar un alumno
+app.post('/alumnos/eliminar/:id', alumnoController.delete);

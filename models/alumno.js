@@ -27,10 +27,10 @@ Alumno.create = function(alumno, result){
 
 //BAJAS
 Alumno.delete = function(nc, result){
-    conexion.query("DELETE FROM alumnos WHERE Num_Control= ?", [nc], function(err, res){
+    conexion.query("DELETE FROM alumnos WHERE NumControl= ?", [nc], function(err, res){
      if(err){
                 console.log("Error: ", err);
-                result(err, null);
+                result(null,err);
             }else{
                 console.log("Eliminacion EXITOSA");
                 result(null, res.insertID);
