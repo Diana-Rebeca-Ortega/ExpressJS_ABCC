@@ -25,54 +25,80 @@
     </div>
 
     <script type="text/javascript">
-        fetch("/alumnos").then(response => {
-            if (response.ok) {
+        fetch("/alumnos")
+            .then(response => {
+                // PRIMER ESCUDO: Si no es 200 OK (ej. 502 o 500), lanzamos error al catch
+                if (!response.ok) {
+                    throw new Error("Error en la respuesta del servidor");
+                }
                 return response.json();
-            }
-        }).then(data => {
-            let result = `<table class="table table-striped table-hover">
-                            <thead class="table-dark">
-                              <tr>
-                                <th> Num. Control </th>
-                                <th> Nombre </th>
-                                <th> Primer Ap. </th>
-                                <th> Segundo Ap. </th>
-                                <th> FechaNac </th>
-                                <th>  Semestre </th>
-                                <th> Carrera </th>
-                                <th class="text-center"> ACCIONES </th>
-                              </tr>
-                            </thead>
-                            <tbody>`;
-            data.forEach((a) => {
-                result += `<tr> 
-                    <td> ${a.NumControl} </td>
-                    <td> ${a.Nombre} </td>
-                    <td> ${a.PrimerAp} </td>
-                    <td> ${a.SegundoAp} </td>
-                    <td> ${a.FechaNac} </td>
-                    <td> ${a.Semestre} </td>
-                    <td> ${a.Carrera} </td>
-                    <td class="text-center"> 
-                        <form action="alumnos/eliminar/${a.NumControl}" method="POST" onsubmit="return confirmarEliminacion()">
-                          <a href="/consultas?id=${a.NumControl}" class="btn btn-primary btn-sm"> Detalle </a> 
-                          <a href="/cambios?id=${a.NumControl}" class="btn btn-warning btn-sm"> Editar </a> 
-                          <button type="submit" class="btn btn-danger btn-sm"> Eliminar </button>
-                        </form>
-                    </td>
-                </tr>`;
+            })
+            .then(data => {
+                // SEGUNDO ESCUDO: Si data no es un arreglo (o está vacío), manejamos el caso
+                if (!data || !Array.isArray(data) || data.length === 0) {
+                    document.getElementById("tabla_alumnos").innerHTML = 
+                        "<p class='text-center'>No hay alumnos registrados actualmente.</p>";
+                    return;
+                }
+
+                let result = `<table class="table table-striped table-hover">
+                                <thead class="table-dark">
+                                  <tr>
+                                    <th> Num. Control </th>
+                                    <th> Nombre </th>
+                                    <th> Primer Ap. </th>
+                                    <th> Segundo Ap. </th>
+                                    <th> FechaNac </th>
+                                    <th> Semestre </th>
+                                    <th> Carrera </th>
+                                    <th class="text-center"> ACCIONES </th>
+                                  </tr>
+                                </thead>
+                                <tbody>`;
+
+                data.forEach((a) => {
+                    // Limpieza de datos nulos para evitar que diga "undefined" en la tabla
+                    const nombre = a.Nombre || "";
+                    const pAp = a.PrimerAp || "";
+                    const sAp = a.SegundoAp || "";
+
+                    result += `<tr> 
+                        <td> ${a.NumControl} </td>
+                        <td> ${nombre} </td>
+                        <td> ${pAp} </td>
+                        <td> ${sAp} </td>
+                        <td> ${a.FechaNac} </td>
+                        <td> ${a.Semestre} </td>
+                        <td> ${a.Carrera} </td>
+                        <td class="text-center"> 
+                            <form action="alumnos/eliminar/${a.NumControl}" method="POST" onsubmit="return confirmarEliminacion()">
+                              <a href="/consultas?id=${a.NumControl}" class="btn btn-primary btn-sm"> Detalle </a> 
+                              <a href="/cambios?id=${a.NumControl}" class="btn btn-warning btn-sm"> Editar </a> 
+                              <button type="submit" class="btn btn-danger btn-sm"> Eliminar </button>
+                            </form>
+                        </td>
+                    </tr>`;
+                });
+
+                result += `</tbody> </table>`;
+                document.getElementById("tabla_alumnos").innerHTML = result;
+
+            })
+            .catch(err => {
+                // TERCER ESCUDO: Aquí cae cualquier error de conexión o de servidor
+                console.error("Error al cargar tabla:", err);
+                document.getElementById("tabla_alumnos").innerHTML = `
+                    <div class="alert alert-danger text-center">
+                        <strong>Error al cargar los datos.</strong><br>
+                        El servidor está tardando en responder o la base de datos está desconectada.
+                        <br><button class="btn btn-outline-danger btn-sm mt-2" onclick="location.reload()">Reintentar</button>
+                    </div>`;
             });
 
-            result += `</tbody> </table>`;
-            document.getElementById("tabla_alumnos").innerHTML = result;
-
-        }).catch(err => {
-            console.log("Error al cargar tabla:", err);
-            document.getElementById("tabla_alumnos").innerHTML = "Error al cargar los datos.";
-        });
         function confirmarEliminacion(){
             return confirm("¿Estás seguro de ELIMINAR este registro?");
         }
+
         $(document).ready(function() {
             setTimeout(function() {
                 $(".msj").fadeOut(1500);

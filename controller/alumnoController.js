@@ -12,7 +12,7 @@ exports.create = function(req, res){
         FechaNac   : req.body.FechaNac,
         Semestre   : req.body.Semestre,
         Carrera    : req.body.Carrera  
-    }
+    };
 
     if(req.body.constructor === Object && Object.keys(req.body).length === 0 ){
         res.status(400).send({error: true, message: 'Falta informacion'});
@@ -22,10 +22,9 @@ exports.create = function(req, res){
         Alumno.create(alumno, function(err, result){
             if(err) {
                 console.log("Error al insertar:", err);
-                res.send(err);
+                res.status(500).send({ error: true, message: 'Error en el servidor' });
             } else {
                 console.log("Guardando alumno exitosamente");
-                req.flash('message', '¡Alumno AGREGADO con EXITO!');
                 res.redirect('/');
             }
         });
@@ -67,15 +66,23 @@ exports.update = function(req, res) {
 //----- Mostrar TODOS los alumnos (API) -----
 exports.findAll = function(req, res){
     Alumno.findAll(function(err, alumnos){
-        if(err) res.send(err);
-        res.status(200).send(alumnos);
+        if(err) {
+            console.error("Error en findAll:", err);
+            // Si hay error de BD, enviamos un arreglo vacío para que el frontend no falle
+            return res.status(500).json([]); 
+        }
+        // Aseguramos que 'alumnos' sea al menos un arreglo vacío
+        res.status(200).json(alumnos || []);
     });
 };
 
 //----- Buscar un Alumno por ID -----
 exports.findById = function(req, res){
     Alumno.findById(req.params.id, function(err, alumno){
-        if(err) res.send(err);
-        res.json(alumno);
+        if(err) {
+            console.error("Error en findById:", err);
+            return res.status(500).json({ error: true, message: "Error al buscar" });
+        }
+        res.json(alumno || {});
     });
 };
